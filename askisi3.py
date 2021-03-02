@@ -1,95 +1,81 @@
-# μετρά ολες τις τετράδες με 1,ΟΡΙΖΟΝΤΙΑ, ΚΑΘΕΤΑ  και Διαγώνια
-from numpy import random
-import numpy as np
+# Εύρεση στατιστικών ΚΙΝΟ 1ης κλήρωσης για κάθε μέρα του τρέχοντα μήνα
+import urllib.request
+import json
+import datetime
+from time import sleep
 
-pl = int(input("Πλευρά Πίνακα : "))  # Δίνω πλευρά.
+cur_date=datetime.datetime.now()            # Σημερινη ημερομηνία (Τελικός Έλεγχος 2021-03-02)
+print(cur_date)                             # εμφάνιση της μορφής
+print(cur_date.year)                        # Ετος 2021
+print(cur_date.month)                       # Μήνας 03
+print(cur_date.day)                         # Ημέρα 02
 
-x = pl * pl # συνολικό πλήθος κελιών πίνακα
-print("πλήθος κελιών ", x)
+cd=cur_date.day             # κρατώ στη μεταβλητή cd τη σημερινή ημέρα
+for i in range(cd):         # for για να βρώ για όλες τις ημερομηνίες του τρέχοντα μήνα
+    #--------------------------------------------
+    #Βρίσκω την τελευταία μερα του προηγούμενου μήνα
+    #--------------------------------------------
+    cur_date = cur_date - datetime.timedelta(days=cur_date.day-i)
+    print(cur_date)                             # την εμφανίζω για έλεγχο
 
-y1 = x//2   # πλήθος μηδενικών (0)
-print("πλήθος μηδενικών ", y1)
-y2 = x - y1 # πλήθος άσσων (1)
+    date_str = cur_date.strftime("%Y-%m-%d")
 
-#-----------------------------------------
-mo = 0                              # μεταβλητή για το Μέσο Ορο
-sum = 0                             # μεταβλητή για πλήθος των τετράδων με 1
-while mo < 100:
-    sum1=0
-    #print("=======================================")
-    #print("  Νέος Πίνακας  ")
-    #print("=======================================")
-    arr1 = []  # λιστα που θα συγκεντρωθουν y1 (0) και y2 (1)
-    #-------------------------- # γέμισμα της λίστας πρώτα με 0 και μετα με 1
-    for i in range(y1):
-        arr1.append(0)          # λιστα με (0)
-    #    print(arr1[i])
-    for i in range(y1,x):
-        arr1.append(1)          # λιστα με (1)
-    #   print(arr1[i])
-    #--------------------
-    arr = np.array(arr1)        # λιστα με μηδενικά και άσσους
-    #print(arr)
-    random.shuffle(arr)         # ανακάτεμα -> τυχαία θέση τους
-    #print(arr)                  # εμφάνιση λίστας με τυχαία τη σειρά 1 και 0
-    #------------------------------  εμφάνιση πίνακα
-    for i in range(pl):
-        print(arr[(i*pl):(i*pl+pl)])    # εμφάνιση σε μορφή πίνακα
-    #-------------------------------
+#---------------------------------------
+#χρηση ημνιας date_str ως παραμετρο
+#---------------------------------------
+    url = 'https://api.opap.gr/draws/v3.0/1100/draw-date/'+"/"+date_str+"/"+date_str
+    print(url)                       # εμφάνιση url για έλεγχο ημνιας άντλησης 10 τελ. κληρώσεων
 
-    for line in range(pl):
-        for i in range(0,pl):
-            if i < pl-3:
-                tetrada = [arr[line*pl+i],arr[line*pl+i+1], arr[line*pl+i+2], arr[line*pl+i+3]]  # 4 οριζοντιες θεσεις
-                #print(tetrada)                                         # εμφανιση για έλεγχο
-                z = tetrada.count(1)                                    # μετρημα άσσων
-                if z == 4:
-                    sum = sum + 1
-                    sum1 = sum1 +1
-                    #print(z)                                           # εμφάνιση αποτελέσματος 4 άσσοι
-    #print(" Ολοκληρώθηκε ο οριζόντιος έλεγχος ")
-    # ----------------------------------------------
-    for line in range(pl-3):   #Ελεγχος διαγωνίων από πανω Αρ σε κάτω δεξιά
-        for i in range(0,pl):
-            if i < pl-3:
-                tetrada = [arr[line*pl+i],arr[pl+i+1+pl*line], arr[2*pl+i+2+pl*line], arr[3*pl+i+3+pl*line]]      # 4 οριζοντιες θεσεις
-                #print(tetrada)                                                   # εμφανιση για έλεγχο
-                z = tetrada.count(1)                                             # μετρημα άσσων
-                if z == 4:
-                    sum = sum + 1
-                    sum1 = sum1 +1
-                    #print(z)
-    #print(" Ολοκληρώθηκε ο Διαγώνιος Π.Α -> Κ.Δ έλεγχος ")
-    #----------------------------------
-    for line in range(pl):
-        if line < pl - 3:
-            for i in range(0,pl):
-                tetrada = [arr[line*pl+i],arr[line*pl+i+1*pl], arr[line*pl+i+2*pl], arr[line*pl+i+3*pl]]      # 4 οριζοντιες θεσεις
-                #print(tetrada)                                                   # εμφανιση για έλεγχο
-                z = tetrada.count(1)                                             # μετρημα άσσων
-                if z == 4:
-                    sum = sum + 1
-                    sum1 = sum1 +1
-                    #print(z)
-    # ολοι οι οριζοντιοι έλεγχοι εγιναν
-    #print(" Ολοκληρώθηκε ο ΚΑΘΕΤΟΣ έλεγχος ")
-    #------------------------------------
-    for line in range(pl-4, pl):   #Ελεγχος διαγωνίων από Κάτω Αρ σε Πάνω δεξιά
-        for i in range(0,pl):
-            if i < pl-3:
-                tetrada = [arr[line*pl+i],arr[pl*line-pl+i+1], arr[pl*line-2*pl+i+2], arr[pl*line-3*pl+i+3]]      # 4 οριζοντιες θεσεις
-                #print(tetrada)                                                   # εμφανιση για έλεγχο
-                z = tetrada.count(1)                                             # μετρημα άσσων
-                if z == 4:
-                    sum = sum + 1
-                    sum1 = sum1 +1
-                    #print(z)
-    print("βρέθηκαν ", sum1, " τετράδες με 1")
-    #print(" Ολοκληρώθηκε ο Διαγώνιος Κ.Α -> Π.Δ έλεγχος ")
-     #------------------------------------
+    r=urllib.request.urlopen(url)            #τραβώ τα δεδομενα
+    html=r.read()
+    html=html.decode()
+    data=json.loads(html, strict=False)
 
-    mo = mo + 1
-print("==========================================")
-print("βρέθηκαν συνολικά ", sum, " τετράδες με 1")
+    t = []
+    for draw in data["content"]:           # από τα content
+        t.append(draw["drawId"])           # φέρνει τα 10 τελευταία Id σε λίστα
+    print(t[0])                            # το 1ο της λίστας είναι το τελευταίο της ημέρας
 
-print("Μέσος όρος τετράδων με 1 για 100 επαναλήψεις = ", sum/100)
+    f1=t[0]+1                   # προσθέτω +1 σε αυτό και έχω το drawId για τη 1η κλήρωση επόμενης ημέρας
+
+    f2=str(f1)                  # μετατρέπεω το drawId σε string για να το προσθέσω ως παράμετρο στο url
+#--------------------------------------------------------------------
+    url2='https://api.opap.gr/draws/v3.0/1100/'+f2 #τοποθετώ το Id σε διαφορετικό app
+    print(url2)                 # Εμφανίζω το url
+
+    r2=urllib.request.urlopen(url2)          #Τραβώ από τα δεδομένα την λίστα της κλήρωσης
+    html2=r2.read()
+    html2=html2.decode()
+    data2=json.loads(html2, strict=False)
+    print(html2)                            #φέρνει τα στοιχεία για την 1η κληρωση της ημέρας (για έλεγχο)
+
+    protinew = []                           # λίστα που θα μαζεύει όλες τις πρώτες κληρώσεις
+
+    if i == 0:
+        proti = protinew
+    protinew = data2["winningNumbers"]['list']   # μεταφέρει τα στοιχεία της i ημέρας στη λίστα protinew
+#   print(protinew)                         # για έλεγχο
+    proti.extend(protinew)                  # προσθέτει στη λίστα proti τη νέα λίστα
+    print(proti)
+    print("=============================")
+    cur_date=datetime.datetime.now()        # σημερινη ημερομηνία
+#----------------------------------
+print("Τέλος συγκέντρωσης νικητήριων αριθμών")
+sum = cd * 20
+print("Η λίστα περιέχει ", sum, " αριθμούς")
+#-------------------------------------
+from collections import Counter
+m = Counter(proti)
+n = len(sorted(m))
+p = dict(sorted(m.items(), key = lambda item: item[1]))
+#-----------------------
+x = list(p.keys())                      # δημιουργεί λίστα από τα κελιδιά του λεξικού
+x.sort()                                # ταξινομεί τη λίστα
+#-----------------------
+for symbol in x:                        # για κάθε χαρακτήρα της ταξ. λίστας (κλειδι του λεξικού)
+     number = p[symbol]                 # τοποθετεί το πλήθος εμφανίσεως του στη μεταβλητή number
+     print(symbol, ": ",  end="")       # τυπώνει τον αλφαβητικό χαρακτήρα του κειμένου
+
+     xy = round((number*100/sum),0)     # κάνει στρογγυλοποίηση 5,32-> 5 και 5,51->6
+
+     print("*"*int(xy))                 # τυπώνει το πλήθος των * ανα αλφαβητικό χαρακτήρα του κειμένου
