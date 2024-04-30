@@ -28,3 +28,6 @@ Write a Python code that takes an ASCII text file as input and converts each cha
 
 ## Using This Repository
 This repository is structured to contain the Python scripts corresponding to each exercise. Each script can be run independently, and they are organized by their exercise numbers. Ensure you have Python installed on your system to run these scripts.
+
+## Known Issues
+The OPAP API that I used is deprecated.
