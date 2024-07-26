@@ -6,7 +6,7 @@ Welcome to the GitHub repository containing the final exam solutions for the "In
 - **Institution:** University of Piraeus
 - **Department:** Department of Informatics
 - **Course:** Introduction to Programming
-- **Semester:** 2nd
+- **Semester:** 1nd
 
 ## Exercises
 
