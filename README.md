@@ -1,6 +1,6 @@
 # Introduction to Programming - Final Exam Solutions
 
-Welcome to the GitHub repository containing the final exam solutions for the "Introduction to Programming" course, offered in the 2nd Semester at the University of Piraeus, Department of Informatics. These exercises were designed to test students' proficiency in Python and are suitable for anyone looking to practice programming with real-world tasks.
+Welcome to the GitHub repository containing the final exam solutions for the "Introduction to Programming" course, offered in the 1st Semester at the University of Piraeus, Department of Informatics. These exercises were designed to test students' proficiency in Python and are suitable for anyone looking to practice programming with real-world tasks.
 
 ## Course Information
 - **Institution:** University of Piraeus
