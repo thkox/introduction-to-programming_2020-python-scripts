@@ -10,6 +10,10 @@ The final exam solutions for the "Introduction to Programming" course, offered i
 - **Course:** Introduction to Programming (2020)
 - **Semester:** 1st
 
+## Technologies Used
+
+- Python
+
 ## Exercises
 
 ### Exercise 1: Square Array Manipulation
