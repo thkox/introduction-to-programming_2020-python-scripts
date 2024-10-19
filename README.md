@@ -5,8 +5,8 @@
 The final exam solutions for the "Introduction to Programming" course, offered in the 1st semester of the 2020 academic year at the University of Piraeus, Department of Informatics. These exercises were designed to test students' proficiency in Python and are suitable for anyone looking to practice programming with real-world tasks.
 
 ## Course Information
-- **Institution:** University of Piraeus
-- **Department:** Department of Informatics
+- **Institution:** [University of Piraeus](https://www.unipi.gr/en/)
+- **Department:** [Department of Informatics](https://cs.unipi.gr/en/)
 - **Course:** Introduction to Programming (2020)
 - **Semester:** 1st
 
